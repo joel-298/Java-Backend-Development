@@ -1,0 +1,51 @@
+IN THIS FOLDER WE WILL LEARN
+
+1) HOW TO CONNECT TO DB : Resources folder and then add db credentials there
+
+2) HOW TO CREATE SCHEMAS : entity !
+                         : Connect it with mongodb schema ! using @Document
+                           i.e => @Document(collection = "journal_entries")
+                         : Create Primary Key parameter using @Id
+                           i.e =>     @Id
+                                      private String id ;
+                         : CREATE THE WHOLE SCHEMA USING CLASS
+
+3) MODULAR STRUCTURE (MVC ARCHITECTURE) :
+                                        : entity     - Will contain all the schemas class
+                                        : controller - will contain all the END POINTS
+                                        : service    - Will contain all the CRUD LOGICS and call REPOSITORY
+                                        : repository - Will contains all the REPOSITORY INTERFACES, These are used to interact with the database layer.
+
+4) FLOW STRUCTURE AND IMPORTANT POINTS :
+      : Entity will create table or schema or collection
+      : Controller will call Services and Services will call Repository
+      : Entity will be imported or include in all these folders Controller,Services,Repository if necessary
+      : MONGODB WLL PROVIDE MANY INBUILT FUNCTIONS TO PERFORM CRUD OPERATIONS THAT WE WILL USE IN SERVICES FOLDER
+
+      : IN REPOSITORY WE WILL CREATE INTERFACE AND EXTEND MONGODB INTERFACE IN IT.
+        (This will make us able to access may inbuilt functions)
+      : THEN IN SERVICES WE WILL CREATE A "SERVICE CLASS" and create a BEAN of it by @Component
+        - We will also import repository here with the help of @Autowired
+          i.e   @Autowired
+                private JournalEntryRepository journalEntryRepository ;
+        - Then we will write functions here that will be called from CONTROLLER and use inbuild Mongodb functions extended from interface of REPOSITORY !
+      : IN CONTROLLER : MAKE A BEAN USING @RestController and also map it with the end point using @RequestMapping('/route')
+        - We are going to create a class of each "END POINT" and include "SERVICES" here using @Autowired !
+          i.e   @Autowired
+                private JournalEntryService journalEntryService ;
+        - THEN INSIDE THIS CLASS WE ARE GOING TO CALL THE FUNCTIONS PRESENT IN THE SERVICES !
+        - AND RETURN THE RESPONSE IN THE END !
+
+5) RESPONSE (Returning response in the controller file along with the response status) :
+JUST LOOK AT THE CODE ITS A LOT TO EXPLAIN HERE
+-> Include ResponseEntity<?>
+-> Inside the functions use try catch
+-> In services use throw / orElseThrow(()-> new RuntimeException("message") ;
+   Verify it in catch too that if(e.getMessage().contains or euaqs) then throw e ;
+-> in Controller HttpsStatus status = e.getMessage().contains or equals then assign different status like
+   NOT_FOUND , INTERNAL_SERVER_ERROR , CREATED etc
+-> ResponseEntity.okay(BODY)
+-> Response.Entity(HttpStatus.status(XYZ)).body(BODY) ;
+-> BODY = Map.of("key1","value1",
+                 "key2","value2 )
+
