@@ -4,6 +4,10 @@ package com.example.journalproject.service;
 import com.example.journalproject.entity.JournalEntry;
 import com.example.journalproject.entity.UserEntry;
 import com.example.journalproject.repository.UserEntryRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.LoggerFactoryFriend;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,6 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Component
+@Slf4j
 public class UserEntryService {
 
     @Autowired
@@ -28,6 +33,7 @@ public class UserEntryService {
         try {
             return userEntryRepository.findAll() ;
         } catch (Exception e) {
+            log.error(e.getMessage());
             throw new RuntimeException("Failed to fetch all users from database", e) ;
         }
     }
@@ -38,8 +44,10 @@ public class UserEntryService {
             return userEntryRepository.findById(myId).orElseThrow(()-> new RuntimeException("User Not Found !")) ;
         } catch (Exception e) {
             if(e.getMessage().equals("User Not Found !")) {
+                log.error(e.getMessage());
                 throw e;
             }
+            log.error(e.getMessage());
             throw new RuntimeException("Failed to fetch user data from database", e) ;
         }
     }
@@ -49,6 +57,7 @@ public class UserEntryService {
         try {
             return userEntryRepository.save(userEntry);
         } catch(Exception e) {
+            log.error(e.getMessage());
             throw new RuntimeException("Failed to add Entry !",e) ;
         }
     }
@@ -58,6 +67,7 @@ public class UserEntryService {
             userEntry.setRoles(Arrays.asList("USER")); // by default only add one role
             return userEntryRepository.save(userEntry);
         } catch(Exception e) {
+            log.error("ERROR : DUPLICATE ENTRY ! " + e.getMessage());
             throw new RuntimeException("Failed to add Entry !",e) ;
         }
     }
@@ -68,6 +78,7 @@ public class UserEntryService {
             userEntry.setRoles(Arrays.asList("ADMIN"));
             return userEntryRepository.save(userEntry);
         } catch(Exception e) {
+            log.error(e.getMessage());
             throw new RuntimeException("Failed to add Entry !",e) ;
         }
     }
@@ -92,8 +103,10 @@ public class UserEntryService {
             return ;
         } catch (Exception e) {
             if (e.getMessage().equals("User Not Found !")) {
+                log.error(e.getMessage());
                 throw e ;
             }
+            log.error(e.getMessage());
             throw new RuntimeException("Failed to delete User !",e) ;
         }
     }

@@ -3,6 +3,9 @@ package com.example.journalproject.service;
 import com.example.journalproject.entity.JournalEntry;
 import com.example.journalproject.entity.UserEntry;
 import com.example.journalproject.repository.JournalEntryRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -12,6 +15,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
+@Slf4j
 public class JournalEntryService {
 
     @Autowired
@@ -27,6 +31,7 @@ public class JournalEntryService {
             return journalEntryRepository.findAll();
         }
         catch (Exception e) {
+            log.error("Failed to fetch journal entries from database", e);
             throw new RuntimeException("Failed to fetch journal entries from database", e);
         }
     }
@@ -41,8 +46,10 @@ public class JournalEntryService {
         }
         catch (Exception e) {
             if (e.getMessage().equals("Journal Not Found !")) {
+                log.error("Journal Not Found") ;
                 throw e;
             }
+            log.error(e.getMessage()) ;
             throw new RuntimeException("Failed to fetch journal entry from database", e);
         }
     }
@@ -59,12 +66,15 @@ public class JournalEntryService {
                 userEntryService.saveEntry(userObject) ;
                 return success ;
             } else {
+                log.error("User Not Found Entry Failed !") ;
                 throw new RuntimeException("User Not Found Entry Failed !");
             }
         } catch (Exception e) {
             if(e.getMessage().equals("User Not Found Entry Failed !")) {
+                log.error(e.getMessage()) ;
                 throw e ;
             }
+            log.error(e.getMessage()) ;
             throw new RuntimeException("Failed to add Entry !") ;
         }
     }
@@ -77,8 +87,10 @@ public class JournalEntryService {
             journalEntryRepository.deleteById(myId); // will return true or false
         } catch (Exception e) {
             if (e.getMessage().equals("Journal Not Found !")) {
+                log.error(e.getMessage());
                 throw e;
             }
+            log.error(e.getMessage());
             throw new RuntimeException("Failed to Delete Journal Entry !", e);
         }
     }
@@ -110,12 +122,16 @@ public class JournalEntryService {
             }
         } catch (Exception e) {
             if(e.getMessage().equals("Journal Not Found !"))  {
+                log.error(e.getMessage());
                 throw e ;
             } else if (e.getMessage().equals("User Not Found !")) {
+                log.error(e.getMessage());
                 throw e ;
             } else if(e.getMessage().equals("You are not authorize to perform this function !")) {
+                log.error(e.getMessage());
                 throw e ;
             } else {
+                log.error(e.getMessage());
                 throw new RuntimeException("Failed to Delete Journal Entry !");
             }
         }
@@ -141,8 +157,10 @@ public class JournalEntryService {
         }
         catch(Exception e) {
             if(e.getMessage().equals("Journal Not Found !")) {
+                log.error(e.getMessage());
                 throw e ;
             }
+            log.error(e.getMessage());
             throw new RuntimeException("Failed to update Data !") ;
         }
     }
