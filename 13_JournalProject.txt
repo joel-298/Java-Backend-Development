@@ -1,0 +1,46 @@
+1)
+@Component vs @Service in Spring Boot : 
+Both can create Beans. 
+
+Flow Structure : 
+- Controller(@RestController) -> Service(@Component) -> Repository(Interface)
+- Actual Code/Logic is written in Service. 
+- Service Annotation is used for better Readibility. 
+- If we mention @Service instead of @Component in Service folder then others can easily understand that this file provides a Service.
+
+
+
+
+
+2) 
+@Value : This is also done in 12_JournalProject
+In Spring Boot, the @Value annotation is used to inject values from property files, environment variables, 
+or expressions directly into fields, methods, or constructor parameters.
+FOR EXAMPLE :   @Value("${weather.api.url}")
+		private String weatherApiUrl; // here we do not jave to write static final 
+
+		Define API-KEY in resources -> application file and create a custom : 
+					       weather.api.url = value
+QUESTION : WHY DO WE NOT WRITE STATIC AND FINAL IN THIS @VALUE CASE ? 
+🌦️ Imagine This:
+You’re building a weather app. To get the weather data, your app needs to connect to an online weather service. That service has a special link (URL) — like a phone number your app has to call.
+Now, you have two ways to store this phone number:
+
+📦 Option 1: Write it on the wall (hardcoded with static final)
+You paint the number on your wall with permanent ink:
+"Call this number: https://api.weather.com/data"
+This is what developers call a static final value. It never changes. But what if the number changes one day? You have to repaint the wall, which is a pain!
+
+📦 Option 2: Write it on a whiteboard (@Value – injected value)
+Instead, you write:
+"Call this number: ${weather.api.url}"
+And on a separate paper (config file), you write:
+weather.api.url = https://api.weather.com/data
+
+Now if the number changes, you don’t touch the wall — you just update the paper.
+This is what Spring does with @Value — it reads from the paper (property file) and fills in the number automatically.
+
+📌 Why no static or final?
+🔴 static is like writing the number on a shared wall for everyone, and Spring can’t sneak in and write there.
+
+🔴 final means "you can't change this once it's set", but Spring needs to fill it in at runtime, so it can’t be final either.
