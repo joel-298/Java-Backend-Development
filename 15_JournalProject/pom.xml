@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>14_JournalProject</artifactId>
+	<artifactId>15_JournalProject</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>journalproject</name>
-	<description>@PostConstruct in Spring Boot</description>
+	<description>JWT Authentication and Authorization</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -78,6 +78,24 @@
 			<artifactId>junit-jupiter</artifactId>
 			<version>5.8.2</version>
 			<scope>compile</scope>
+		</dependency>
+
+		<!-- JWT DEPENDENCY -->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-api</artifactId>
+			<version>0.12.5</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-jackson</artifactId>
+			<version>0.12.5</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-impl</artifactId>
+			<version>0.12.5</version>
+			<scope>runtime</scope>
 		</dependency>
 	</dependencies>
 

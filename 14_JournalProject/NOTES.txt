@@ -1,0 +1,25 @@
+In this File we are going to save the EXTERNAL-API-LINK in database (Frequent used API) 
+Disadvantage : Will it not increase the Latency (Extra an un-necessary calls in db for getting the api link) 
+	       Why to do this when we can hardcode it. 
+REASON : We are going to cover a topic called Application Cache. 
+
+APPLICATION CACHE :
+We store frequently used or frequently changing configurations in database
+And then we load that database in our Spring Boot Application ! 
+
+
+
+
+
+@PostConstructor : 
+Will run automatically as soon as the Bean is created ! 
+FOR EXAMPLE : 
+@Component (Bean) 
+public class XYZ { 
+	
+	@PostConstructor (Works like a constructor) 
+	public void function() {
+		// code 
+	}
+}
+
